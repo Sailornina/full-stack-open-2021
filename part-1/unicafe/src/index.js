@@ -1,6 +1,47 @@
-import React, { useState, useEffect} from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+
+const Statistics = ({ good, neutral, bad }) => {
+
+  const all = good + neutral + bad;
+    if (all === 0) {
+      return <div>No feedback given</div>;
+  }
+
+  const average = () => (good - bad) / all;
+  const positive = () => (good * 100 / all);
+
+  return (
+    <table>
+    <StatisticsLine text="Good" value={good} />
+    <StatisticsLine text="Neutral:" value={neutral} />
+    <StatisticsLine text="Bad:" value={bad} />
+    <StatisticsLine text="All:" value={all} />
+    <StatisticsLine text="Average:" value={average()} />
+    <StatisticsLine text="Positive:" value={positive()} />
+    </table>
+  )
+};
+
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}>{text}</button>
+);
+
+const H1 = ({ text }) => (
+<h1>{text}</h1>
+);
+
+const StatisticsLine = ({ text, value }) => {
+  return (
+  <table>
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
+  </table>
+  )
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -19,32 +60,18 @@ const App = () => {
     setBad(bad + 1);
   };
 
-  const getTotalReviews = () => {
-    return good + neutral + bad;
-  };
-
   return (
-    <div>
-      <h1>Give me feedback</h1>
+  <div>
+    <H1 text={"Give me feedback"} />
 
-      <div>
-        <button onClick={addGoodScore}>good</button>
-        <button onClick={addNeutralScore}>neutral</button>
-        <button onClick={addBadScore}>bad</button>
-      </div>
-
-      <div>
-        <p>Statistics</p>
-        Good: {good} <br/>
-        Neutral: {neutral} <br/>
-        Bad: {bad} <br/>
-        All: {getTotalReviews()} <br/>
-        Average: {good - bad / getTotalReviews()} <br/>
-        Positive: {good * 100 / getTotalReviews()}
-      </div>
-
+      <Button onClick={addGoodScore} text={"good"} />
+      <Button onClick={addNeutralScore} text={"neutral"} />
+      <Button onClick={addBadScore} text={"bad"} />
+   
+    <H1 text={"Statistics"} />
+        <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
-  );
+ );
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));
