@@ -8,17 +8,15 @@ const Button = ({ onClick, text }) => (
   <button onClick={onClick}>{text}</button>
 );
 
-const Anecdote = ({ anecdote, value }) => (
+const Anecdote = ({ anecdote }) => (
   <div>
   <p> {anecdote} </p>
-  <p> {value} </p>
   </div>
 );
 
-const Voting = ({ votes, value }) => (
+const Voting = ({ votes }) => (
  <div>
   <p> has {votes} votes </p>
-  <p> {value} </p>
  </div>
 );
 
@@ -34,14 +32,14 @@ const App = () => {
 
   
  const votesToNewAnecdotes = () => {
-   const copy = { ...votes }
-   copy[selectedIndex] += 1
-   setVotes(copy)
+   const copy = [ ...votes ];
+   copy[selectedIndex] += 1;
+   setVotes(copy);
  };
 
- const highestVotes = () => Math.max(...votes);
- const biggestAnecdoteVoted = () => anecdotes.indexOf(highestVotes);
-
+ const highestVotes = Math.max(...votes);
+ const biggestAnecdoteVoted = anecdotes[votes.indexOf(highestVotes)];
+ 
   return (
   <div>
     <H1 text={"Anecdotes of the day"} />
@@ -49,8 +47,8 @@ const App = () => {
     <Button onClick={aNewAnecdote} text={"I want an anecdotes"} />
     <Button onClick={votesToNewAnecdotes} text={"My vote is for this anecdotes"} />
     <H1 text={"Anecdote with most votes"} />
+    <Anecdote anecdote={biggestAnecdoteVoted} />
     <Voting votes={votes[selectedIndex]} value={highestVotes}/>
-    <Anecdote value={biggestAnecdoteVoted} />
   </div>
   )
 
