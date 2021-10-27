@@ -1,15 +1,8 @@
 import React from 'react';
 
 const Header = ({ course }) => (
-    <h1>{course.name}</h1>
+    <h1>{course}</h1>
 )
-
-const Total = ({ course }) => {
-  const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
-  return(
-    <p>Number of exercises {sum}</p>
-  ) 
-}
 
 const Content = ({ parts }) => {
   return (
@@ -25,6 +18,14 @@ const Part = ({ name, exercises, id }) => (
     </p>
 )
 
+const Total = ({ course }) => {
+  const sum = course.parts.reduce((t, e) => 
+    t + e.exercises, 0);
+   
+   return(
+    <p><b>Total of {sum} exercises</b></p>
+  ) 
+}
 
 const Course = ({ course }) => {
   return (
