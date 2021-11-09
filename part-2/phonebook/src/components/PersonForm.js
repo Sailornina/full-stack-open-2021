@@ -7,21 +7,26 @@ const handleChange = (event) => {
  setNewName(event.target.value);
 }
 
-const handleClick = (event) => {
+const handleSumit = (event) => {
+    event.preventDefault();
+    if (persons.some(e => e.name === newName)) {
+        window.alert(`${newName} is already added to phonebook`)
+    } else {
     const personObjectNew = {
         name: newName,
         id: persons.length + 1,
     }
     setPersons(persons.concat(personObjectNew));
+    }
     setNewName('')
   };
 
 
  return (
     <div>
-      <form>
+      <form onSubmit={handleSumit}>
         <div> Name: <input value={newName} onChange={handleChange}/></div>
-        <div><button onClick={handleClick} type="button">Add</button></div>
+        <button>Add</button>
       </form>
       <h2>Numbers</h2>
       ...
