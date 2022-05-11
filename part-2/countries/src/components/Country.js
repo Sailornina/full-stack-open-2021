@@ -8,14 +8,15 @@ const Country = ({ country }) => {
 
     return (
         <>
-        <h1>{country.name.common} </h1>
-        <p>Capital: {country.capital} </p>
-        <h3>Languages</h3>
-        <ul>{languagesList}</ul>
-        <p>Population: {country.population}</p>
-        <div>
-        <img src={country.flag} alt="Country flag"></img>
-        </div>
+            <h1>{country.name.common} </h1>
+            <p>Capital: {country.capital} </p>
+            <div>
+            <h3>Languages</h3><ul>{languagesList}</ul>
+            </div>
+            <p>Population: {country.population}</p>
+            <div>
+                <img src= {country.flags.png} alt="Country flag" />
+            </div>
         </>
     );
 };
