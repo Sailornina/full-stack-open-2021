@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
-import Content from './components/Content'
+import Content from './components/Content';
+import Country from './components/Country';
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -24,7 +25,7 @@ const App = () => {
    setNewFilter(event.target.value)
    if (filter.length <= 1) {
      return;
-   }   
+   }  
   
   const regex = new RegExp(newFilter, 'i' );
   const filteredCountries = allCountries.filter(country => country.name.common.match(regex))
@@ -36,7 +37,7 @@ const App = () => {
     <div className="countries">
     <Filter value={newFilter} onChange={handleFilterChange} />
     <Content countries={countries} setCountries={setCountries}/>
-    {countries.map((country) => <p>{country.name.common}</p>)}
+    {countries.map((country) => <Country country={country}/>)}
     </div>
   );
 }
