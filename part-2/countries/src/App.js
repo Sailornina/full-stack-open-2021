@@ -9,7 +9,6 @@ const App = () => {
   const [allCountries, setAllCountries] = useState([])
   const [newFilter, setNewFilter] = useState('')
 
-
  useEffect(() => {
   axios
     .get('https://restcountries.com/v3.1/all')
@@ -18,6 +17,7 @@ const App = () => {
       setAllCountries(data)
     })
  }, [])
+
 
  const handleFilterChange = (event) => {
    console.log("handleFilterChange called")
@@ -31,7 +31,7 @@ const App = () => {
   const filteredCountries = allCountries.filter(country => country.name.common.match(regex))
   setCountries(filteredCountries)
  }
-
+ 
 
  return (
     <div className="countries">
