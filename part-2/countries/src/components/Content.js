@@ -1,7 +1,7 @@
 import React from "react";
 import Country from "./Country";
 
-const Content = ({ countries }) => {
+const Content = ({ countries}) => {
     if (countries.length > 10) {
         return (
             <p>
