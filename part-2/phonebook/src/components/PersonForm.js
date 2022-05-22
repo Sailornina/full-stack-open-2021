@@ -1,41 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const PersonForm = ({ persons, setPersons }) => {
-const [ newName, setNewName ] = useState('');
-const [ newNumber, setNewNumber] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
 
-const handleNameChange = (event) => {
- setNewName(event.target.value);
-}
+  const handleNameChange = (event) => {
+    setNewName(event.target.value);
+  }
 
-const handleNumberChange = (event) => {
+  const handleNumberChange = (event) => {
     setNewNumber(event.target.value);
-}
+  }
 
-const handleSumit = (event) => {
+  const handleSumit = (event) => {
     event.preventDefault();
-    if (persons.some(e => e.name === newName)) {
-        window.alert(`${newName} is already added to phonebook`)
-    } else {
-    const personObjectNew = {
-        name: newName,
-        id: persons.length + 1,
-        number: newNumber
 
+    if (persons.some(e => e.name === newName)) {
+      window.alert(`${newName} is already added to phonebook`)
+      return;
     }
-    setPersons(persons.concat(personObjectNew));
+
+    const personObjectNew = {
+      name: newName,
+      number: newNumber
     }
+    
+    axios
+      .post('http://localhost:3001/persons', personObjectNew)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+      })
+      .catch(error => window.alert(error))
+
+    
     setNewName('')
     setNewNumber('')
   };
 
-
- return (
+  return (
     <div>
       <form onSubmit={handleSumit}>
-        <div> Name: <input value={newName} onChange={handleNameChange}/></div>
-        <div>Number: <input value={newNumber} onChange={handleNumberChange}/></div>
-        <button>Add</button>
+        <div> Name: <input value={newName} onChange={handleNameChange} /></div>
+        <div>Number: <input value={newNumber} onChange={handleNumberChange} /></div>
+        <input type="submit" value="Add" />
       </form>
       <h2>Numbers</h2>
     </div>
