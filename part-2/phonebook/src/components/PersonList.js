@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const PersonList = ({ persons }) => {
     const newPersonAddedToTheList = persons.map((person) => (
         <p key={person.id.toString()}>{person.name}{person.number}{''}</p>
@@ -10,5 +9,4 @@ const PersonList = ({ persons }) => {
 };
 
   
-
 export default PersonList;
