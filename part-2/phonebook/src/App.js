@@ -4,10 +4,12 @@ import PersonList from "./components/PersonList";
 import Filter from './components/Filter';
 import personsService from './services/persons';
 
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newFilter, setNewFilter] = useState('');
 
+  // Filter
   const filteredNames = persons.filter(person =>
     person.name.toUpperCase().includes(newFilter.toLowerCase())
   );
@@ -15,12 +17,14 @@ const App = () => {
   useEffect(() => {
     console.log('effect')
     personsService
-    .getAll()
+      .getAll()
       .then(initialPersons => {
         setPersons(initialPersons)
       })
   }, [])
 
+
+ 
 
   return (
     <div>
@@ -28,7 +32,7 @@ const App = () => {
       <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
       <h3>Add a new person</h3>
       <PersonForm persons={persons} setPersons={setPersons} />
-      <PersonList persons={filteredNames} />
+      <PersonList persons={filteredNames} setPersons={setPersons} />
     </div>
   );
 };
