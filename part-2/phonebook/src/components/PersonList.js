@@ -3,7 +3,6 @@ import Person from "./Person";
 import personsService from '../services/persons';
 
 
-
 const PersonList = ({ persons, setPersons }) => {
 
     const deletePerson = (person) => {

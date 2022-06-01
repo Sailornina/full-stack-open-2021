@@ -17,7 +17,7 @@ const PersonForm = ({ persons, setPersons }) => {
     event.preventDefault();
 
     if (persons.some(e => e.name === newName)) {
-      window.alert(`${newName} is already added to phonebook`)
+      window.alert(`${newName} is already added to phonebook, replace the old number with a new one?`)
       return;
     }
 
@@ -25,6 +25,12 @@ const PersonForm = ({ persons, setPersons }) => {
       name: newName,
       number: newNumber
     }
+
+    personsService
+      .update(persons.id, personObjectNew)
+      .then(returnedPerson =>{
+        setPersons(persons.map(person => persons.id !== persons.id ? person : returnedPerson))
+      })
 
     personsService
       .create(personObjectNew)
