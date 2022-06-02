@@ -15,36 +15,35 @@ const PersonForm = ({ persons, setPersons }) => {
 
   const handleSumit = (event) => {
     event.preventDefault();
-    
-    const personToAdd = persons
-    const updatedPerson = { ...personToAdd, number: newNumber }
 
-    if (persons.some(e => e.name === newName)) {
+    const existingPerson = persons.find((e) => e.name === newName)
+
+    if (existingPerson) {
       window.alert(`${newName} is already added to phonebook, replace the old number with a new one?`)
       personsService
-        .update(persons.id, updatedPerson)
+        .update(existingPerson.id, { ...existingPerson, number: newNumber })
         .then(returnedPerson => {
-          setPersons(persons.map(person => persons.id !== personToAdd.id ? person : returnedPerson))
-          setNewName('')
-          setNewNumber('')
+          setPersons(persons.map(person => person.id == existingPerson.id ? returnedPerson : person))
         })
 
+      setNewName('')
+      setNewNumber('')
+
+    } else {
+      
+      personsService
+        .create({
+          name: newName,
+          number: newNumber
+        })
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+        })
+        .catch(error => window.alert(error))
+
+      setNewName('')
+      setNewNumber('')
     }
-
-    const personObjectNew = {
-      name: newName,
-      number: newNumber
-    }
-
-    personsService
-      .create(personObjectNew)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-      })
-      .catch(error => window.alert(error))
-
-    setNewName('')
-    setNewNumber('')
   };
 
   return (
