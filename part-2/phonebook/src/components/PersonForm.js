@@ -47,7 +47,8 @@ const PersonForm = ({ persons, setPersons }) => {
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
         })
-        .catch(error => window.alert(error))
+        .catch(error => 
+          window.alert(error))
 
       setNewName('')
       setNewNumber('')
