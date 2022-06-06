@@ -3,6 +3,7 @@ import PersonForm from "./components/PersonForm";
 import PersonList from "./components/PersonList";
 import Filter from './components/Filter';
 import personsService from './services/persons';
+import './index.css'
 
 
 const App = () => {
@@ -23,14 +24,12 @@ const App = () => {
       })
   }, [])
 
-  
- 
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
       <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
-      <h3>Add a new person</h3>
+      <h2>Add a new person</h2>
       <PersonForm persons={persons} setPersons={setPersons} />
       <PersonList persons={filteredNames} setPersons={setPersons} />
     </div>

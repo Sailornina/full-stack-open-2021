@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import Notification from './Notification';
 import personsService from '../services/persons';
 
 const PersonForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [message, setMessage] = useState(null)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -23,14 +25,20 @@ const PersonForm = ({ persons, setPersons }) => {
       personsService
         .update(existingPerson.id, { ...existingPerson, number: newNumber })
         .then(returnedPerson => {
-          setPersons(persons.map(person => person.id == existingPerson.id ? returnedPerson : person))
+          setPersons(persons.map(person => person.id === existingPerson.id ? returnedPerson : person))
         })
 
       setNewName('')
       setNewNumber('')
+      setMessage(
+        `${existingPerson.name} was successfully updated`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 2000)
 
     } else {
-      
+
       personsService
         .create({
           name: newName,
@@ -43,11 +51,18 @@ const PersonForm = ({ persons, setPersons }) => {
 
       setNewName('')
       setNewNumber('')
+      setMessage(
+        `${newName} was successfully added`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 2000)
     }
   };
 
   return (
     <div>
+      <Notification message={message} />
       <form onSubmit={handleSumit}>
         <div> Name: <input value={newName} onChange={handleNameChange} /></div>
         <div>Number: <input value={newNumber} onChange={handleNumberChange} /></div>
