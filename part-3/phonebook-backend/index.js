@@ -52,8 +52,21 @@ app.delete('/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
+const randomInt = () => {
+  min = Math.ceil(1);
+  max = Math.floor(99_999_999);
+  return Math.floor(Math.random() * (max - min) + 1);
+}
+
 app.post('/api/persons', (request, response) => {
-  const person = request.body
+  const body  = request.body
+
+  const persons = {
+    name: body.name,
+    number: body.number,
+    id: randomInt(),
+  }
+
   console.log(persons)
   response.json(persons)
 })
