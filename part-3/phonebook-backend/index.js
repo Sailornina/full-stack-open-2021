@@ -66,6 +66,11 @@ app.post('/api/persons', (request, response) => {
       error: 'The name or number is missing' 
     })
   }
+  if (body.name === body.name) {
+    return response.status(400).json({
+      error: 'The name already exists in the phonebook',
+    })
+  }
 
   const persons = {
     name: body.name,
